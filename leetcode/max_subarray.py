@@ -5,6 +5,19 @@ from typing import List
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         """
+        Time = Θ(n)
+        """
+        cs = nums[0]
+        ms = cs
+
+        for i in nums[1:]:
+            cs = max(i, i+cs)
+            ms = max(cs, ms)
+
+        return ms
+
+    def maxSubArray_dnc(self, nums: List[int]) -> int:
+        """
         Divide and conquer approach.
         If n > 1: T(n) = 2T(n/2) + Θ(n)
         if n == 1: T(n) = Θ(1)
