@@ -20,6 +20,7 @@ def depth_first_search(adj):
 
     history = {'time': 0}
     edge_class = dict()
+    topology = []
 
     def visit(node, neighbors, tree):
         assert node not in visited
@@ -45,13 +46,14 @@ def depth_first_search(adj):
                     edge_class[edge] = 'tree'
                     visit(neighbor, neighbors, tree)
 
+        topology.insert(0, node)
         path.remove(node)
 
     for src, dst in adj:
         if src not in visited:
             visit(src, neighbors, set())
 
-    return edge_class, history
+    return edge_class, history, topology
 
 
 adj = [
@@ -82,7 +84,7 @@ expected_classes = {
     (6, 7): 'cross'
 }
 
-actual_classes, actual_history = depth_first_search(adj)
+actual_classes, actual_history, topology = depth_first_search(adj)
 
 pprint.PrettyPrinter(indent=4).pprint(actual_classes)
 assert expected_classes == actual_classes
